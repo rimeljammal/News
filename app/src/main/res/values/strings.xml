@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="app_name">News</string>
+    <string name="search">Search</string>
+    <string name="or">OR</string>
+    <string name="hint">Enter to search</string>
+    <string name="regiser">Register?</string>
+    <string name="login">Login</string>
+    <string name="register_login">Register/Login</string>
+
+    <string-array name="news_types">
+        <item>Entertainment</item>
+        <item>Sports</item>
+        <item>General</item>
+        <item>Health</item>
+        <item>Science</item>
+        <item>Technology</item>
+        <item>Business</item>
+    </string-array>
+
+    <string-array name="news_countries">
+        <item>Great Britain</item>
+        <item>America</item>
+        <item>France</item>
+        <item>Italy</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
