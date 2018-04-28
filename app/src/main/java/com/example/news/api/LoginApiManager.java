@@ -1,5 +1,8 @@
 package com.example.news.api;
 
+import com.example.news.models.User;
+
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -30,4 +33,13 @@ public class LoginApiManager {
         }
         return loginApiManager;
     }
+
+    public Call<User> login(User user) {
+        return loginApi.login(user);
+    }
+
+    public Call<User> register(User user)   {
+        return loginApi.register(user);
+    }
+
 }

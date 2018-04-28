@@ -4,33 +4,45 @@ package com.example.news.models;
  * Created by Rim on 16/04/2018.
  */
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class User {
 
-    private int id;
-    private String token;
+    @SerializedName("_id")
+    private String id;
+    private String name;
     private String email;
     private String password;
-    private String username;
+    private String token;
+    private List<String> favorites;
 
-    public User(String username, String password)   {
-        this.username = username;
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
         this.password = password;
     }
 
-    public int getId() {
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getToken() {
-        return token;
+    public String getName() {
+        return name;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -49,11 +61,19 @@ public class User {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getToken() {
+        return token;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<String> getFavorites(){
+        return favorites;
+    }
+
+    public void setFavorites(List<String> favorites)  {
+        this.favorites = favorites;
     }
 }
