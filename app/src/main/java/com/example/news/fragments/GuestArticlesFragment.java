@@ -14,10 +14,8 @@ import android.widget.TextView;
 
 import com.example.news.R;
 import com.example.news.api.ApiManager;
-import com.example.news.local.storage.LocalStorageManager;
 import com.example.news.models.ApiResponse;
 import com.example.news.models.ArticleItem;
-import com.example.news.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,24 +25,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class ArticlesFragment extends Fragment {
+public class GuestArticlesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
     private ApiManager apiManager;
-    private List<ArticleItem> items;
     private RecyclerView articlesRecyclerView;
-    private ArticlesListAdapter articlesListAdapter;
-    private LocalStorageManager localStorageManager;
-    private String token;
+    private List<ArticleItem> items;
+    private ArticlesGuestListAdapter articlesGuestListAdapter;
 
-    public ArticlesFragment() {
-        // Required empty public constructor
+    public GuestArticlesFragment() {
     }
-
-    public static ArticlesFragment newInstance() {
-        ArticlesFragment fragment = new ArticlesFragment();
+    public static GuestArticlesFragment newInstance() {
+        GuestArticlesFragment fragment = new GuestArticlesFragment();
         return fragment;
     }
 
@@ -55,29 +48,25 @@ public class ArticlesFragment extends Fragment {
         items = new ArrayList<>();
         apiManager = new ApiManager();
 
-        articlesListAdapter = new ArticlesListAdapter(items);
+        articlesGuestListAdapter = new ArticlesGuestListAdapter(items);
+
+        getRandom("us");
+        getRandom("au");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_articles, container, false);
+        View view = inflater.inflate(R.layout.fragment_guest_articles, container, false);
 
-        articlesRecyclerView = view.findViewById(R.id.articles_view);
+        articlesRecyclerView = view.findViewById(R.id.articles_guest_view);
 
         articlesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        articlesRecyclerView.setAdapter(articlesListAdapter);
-
-        localStorageManager = LocalStorageManager.getInstance(getActivity().getApplicationContext());
-        User user = localStorageManager.getUser();
-        token = user.getToken();
-        List<String> toSearch = user.getFavorites();
-
-        for(int i = 0; i < toSearch.size(); i++)
-            getArticles(toSearch.get(i));
+        articlesRecyclerView.setAdapter(articlesGuestListAdapter);
 
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -94,14 +83,14 @@ public class ArticlesFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getArticles(String q)   {
-        apiManager.getArticles(q).enqueue(new Callback<ApiResponse>() {
+    public void getRandom(String random)   {
+        apiManager.getRandom(random).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(response.isSuccessful()) {
                     ApiResponse articles = response.body();
                     items.addAll(articles.getArticles());
-                    articlesListAdapter.notifyDataSetChanged();
+                    articlesGuestListAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -112,19 +101,18 @@ public class ArticlesFragment extends Fragment {
         });
     }
 
-
-    public static class ArticlesListAdapter extends RecyclerView.Adapter<ArticlesFragment.ArticlesListAdapter.ViewHolder>    {
+    public static class ArticlesGuestListAdapter extends RecyclerView.Adapter<ArticlesGuestListAdapter.ViewHolder>    {
 
         private List<ArticleItem> items;
 
-        public ArticlesListAdapter(List<ArticleItem> items)    {
+        public ArticlesGuestListAdapter(List<ArticleItem> items)    {
             this.items = items;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
-            return new ArticlesListAdapter.ViewHolder(view);
+            return new ViewHolder(view);
         }
 
         @Override

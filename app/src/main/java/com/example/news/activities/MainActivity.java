@@ -1,9 +1,8 @@
 package com.example.news.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,9 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.news.R;
+import com.example.news.fragments.ArticlesFragment;
+import com.example.news.fragments.FavoriteFragment;
+import com.example.news.fragments.GuestArticlesFragment;
+import com.example.news.local.storage.LocalStorageManager;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ArticlesFragment.OnFragmentInteractionListener, FavoriteFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        addArticlesFragment();
     }
 
     @Override
@@ -67,13 +71,51 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_search) {
-        } else
-            if (id == R.id.nav_favorites) {
-            }
+        switch (id) {
+
+            case R.id.nav_home:
+                addArticlesFragment();
+                break;
+
+            case R.id.nav_favorites:
+                showFavoritesFragment();
+                break;
+
+            case R.id.nav_logout:
+                logout();
+                break;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        LocalStorageManager.getInstance(this).deleteUser();
+        Intent intent = new Intent(this, GuestActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void addArticlesFragment() {
+        ArticlesFragment fragment = ArticlesFragment.newInstance();
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_main, fragment)
+                .commit();
+    }
+
+    private void showFavoritesFragment() {
+        setTitle(getString(R.string.fav_title));
+        FavoriteFragment fragment = FavoriteFragment.newInstance();
+        getFragmentManager().beginTransaction().replace(R.id.container_main, fragment).commit();
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -13,12 +13,8 @@ import retrofit2.http.Query;
 public interface NewsApi {
 
     @GET("top-headlines")
-    Call<ApiResponse> getArticles(@Query("country") String country, @Query("category") String category);
-
-    @GET("top-headlines")
-    Call<ApiResponse> getBoth(@Query("q") String q, @Query("country") String country, @Query("category") String category);
-
-    @GET("top-headlines")
     Call<ApiResponse> getRandom(@Query("country") String random);
 
+    @GET("everything")
+    Call<ApiResponse> getArticles(@Query("q") String q);
 }

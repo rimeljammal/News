@@ -43,13 +43,11 @@ public class ApiManager {
         newsApi = retrofit.create(NewsApi.class);
     }
 
-    public Call<ApiResponse> getArticles(String country, String category) {
-        return newsApi.getArticles(country, category);
+    public Call<ApiResponse> getArticles(String q) {
+        return newsApi.getArticles(q);
     }
 
-    public Call<ApiResponse> getBoth(String q, String country, String category) {
-        return newsApi.getBoth(q, country, category);
-    }
+
 
     public Call<ApiResponse> getRandom(String random) {
         return newsApi.getRandom(random);

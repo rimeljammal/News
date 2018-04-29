@@ -7,6 +7,7 @@
     <string name="regiser">Register?</string>
     <string name="login">Login</string>
     <string name="register_login">Register/Login</string>
+    <string name="fav_title">Favorites</string>
 
     <string-array name="news_types">
         <item>Entertainment</item>
@@ -16,13 +17,6 @@
         <item>Science</item>
         <item>Technology</item>
         <item>Business</item>
-    </string-array>
-
-    <string-array name="news_countries">
-        <item>Great Britain</item>
-        <item>America</item>
-        <item>France</item>
-        <item>Italy</item>
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

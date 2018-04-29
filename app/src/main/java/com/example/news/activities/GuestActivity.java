@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.news.R;
-import com.example.news.fragments.ArticlesFragment;
+import com.example.news.fragments.GuestArticlesFragment;
+import com.example.news.local.storage.LocalStorageManager;
+import com.example.news.models.User;
 
-public class GuestActivity extends AppCompatActivity implements ArticlesFragment.OnFragmentInteractionListener {
+public class GuestActivity extends AppCompatActivity implements GuestArticlesFragment.OnFragmentInteractionListener {
+
+    private LocalStorageManager localStorageManager;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +49,26 @@ public class GuestActivity extends AppCompatActivity implements ArticlesFragment
     }
 
     private void addArticlesFragment() {
-        ArticlesFragment fragment = ArticlesFragment.newInstance();
+        GuestArticlesFragment fragment = GuestArticlesFragment.newInstance();
 
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.container_guest, fragment)
                 .commit();
     }
 
-    public void goToAuth()  {
-        Intent intent = new Intent(this, AuthenticationActivity.class);
+
+    public void goToAuth()    {
+        Intent intent;
+
+        localStorageManager = LocalStorageManager.getInstance(getApplicationContext());
+        User user = localStorageManager.getUser();
+        if(user == null)  {
+            intent = new Intent(this, AuthenticationActivity.class);
+        }   else    {
+            token = user.getToken();
+            intent = new Intent(this, MainActivity.class);
+        }
         startActivity(intent);
     }
 

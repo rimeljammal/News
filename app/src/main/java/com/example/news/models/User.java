@@ -18,10 +18,11 @@ public class User {
     private String token;
     private List<String> favorites;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, List<String> favorites) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.favorites = favorites;
     }
 
     public User(String email, String password) {

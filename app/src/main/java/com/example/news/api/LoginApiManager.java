@@ -1,7 +1,15 @@
 package com.example.news.api;
 
+import com.example.news.models.ApiResponse;
+import com.example.news.models.ArticleItem;
 import com.example.news.models.User;
 
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,6 +48,10 @@ public class LoginApiManager {
 
     public Call<User> register(User user)   {
         return loginApi.register(user);
+    }
+
+    public Call<ApiResponse> updateFavorite(List<String> favString, String token) {
+        return loginApi.updateFavorite(favString, token);
     }
 
 }

@@ -8,13 +8,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.example.news.R;
 import com.example.news.api.LoginApiManager;
 import com.example.news.models.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +36,9 @@ public class RegisterFragment extends Fragment {
     private EditText nameText, emailText, passwordText;
     private ProgressBar progressBar;
     private Button registerButton;
+    private Spinner favSpinner;
+
+    private ArrayAdapter<CharSequence> types_adapter;
 
 
     private LoginApiManager loginApiManager;
@@ -63,6 +71,11 @@ public class RegisterFragment extends Fragment {
         nameText = view.findViewById(R.id.name);
         emailText = view.findViewById(R.id.email);
         passwordText = view.findViewById(R.id.password);
+        favSpinner = view.findViewById(R.id.categorySpinner);
+
+        types_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.news_types, android.R.layout.simple_spinner_item);
+        types_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        favSpinner.setAdapter(types_adapter);
 
         progressBar = view.findViewById(R.id.progressBar);
 
@@ -97,6 +110,32 @@ public class RegisterFragment extends Fragment {
         String name = nameText.getText().toString().trim();
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
+        ArrayList<String> favorite = new ArrayList<>();
+
+        int type = favSpinner.getSelectedItemPosition();
+
+        if (type == 0)
+            favorite.add("entertainment");
+
+        if (type == 1)
+            favorite.add("sports");
+
+        if (type == 2)
+            favorite.add("general");
+
+        if (type == 3)
+            favorite.add("health");
+
+        if (type == 4)
+            favorite.add("science");
+
+        if (type == 5)
+            favorite.add("technology");
+
+        if (type == 6)
+            favorite.add("business");
+
+
         boolean flag = true;
 
         if (TextUtils.isEmpty(name)) {
@@ -122,7 +161,7 @@ public class RegisterFragment extends Fragment {
 
         if (flag) {
             showProgressBar();
-            User registerUser = new User(name, email, password);
+            User registerUser = new User(name, email, password, favorite);
             loginApiManager
                     .register(registerUser)
                     .enqueue(new Callback<User>() {

@@ -44,6 +44,7 @@ public class AuthenticationActivity extends AppCompatActivity implements LoginFr
     public void onLoginSuccess() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -53,7 +54,9 @@ public class AuthenticationActivity extends AppCompatActivity implements LoginFr
 
     @Override
     public void onRegisterSuccess() {
-
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
