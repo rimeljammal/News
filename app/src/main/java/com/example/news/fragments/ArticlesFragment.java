@@ -58,6 +58,7 @@ public class ArticlesFragment extends Fragment {
         articlesListAdapter = new ArticlesListAdapter(items);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

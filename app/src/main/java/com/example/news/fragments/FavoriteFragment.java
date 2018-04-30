@@ -79,7 +79,8 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String toAdd = addEditText.getText().toString();
-                toSearch.add(toAdd);
+                String jdid = toAdd.replace("","");
+                toSearch.add(jdid);
                 updateFavorite(toSearch, token);
                 addEditText.setText("");
                 favoritesListAdapter.notifyDataSetChanged();
@@ -116,9 +117,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(response.isSuccessful()) {
-//                    ApiResponse articles = response.body();
-//                    items.addAll(articles.getArticles());
-//                    articlesListAdapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -156,9 +155,10 @@ public class FavoriteFragment extends Fragment {
         public void onBindViewHolder(final ViewHolder holder, final int position) {
 
             Context context = holder.itemView.getContext();
-            final String type = toSearch.get(position);
+            String type = toSearch.get(position);
 
-            holder.title.setText(type);
+            type = type.replace("\"", "").replace("\\", "");
+            holder.title.setText(type.toString());
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

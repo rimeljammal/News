@@ -28,7 +28,7 @@ public class LoginApiManager {
 
     private LoginApiManager() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000/")
+                .baseUrl("http://10.31.219.73:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

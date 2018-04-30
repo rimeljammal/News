@@ -16,6 +16,7 @@ import android.widget.Spinner;
 
 import com.example.news.R;
 import com.example.news.api.LoginApiManager;
+import com.example.news.local.storage.LocalStorageManager;
 import com.example.news.models.User;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class RegisterFragment extends Fragment {
     private ProgressBar progressBar;
     private Button registerButton;
     private Spinner favSpinner;
+    private LocalStorageManager localStorageManager;
 
     private ArrayAdapter<CharSequence> types_adapter;
 
@@ -78,6 +80,7 @@ public class RegisterFragment extends Fragment {
         favSpinner.setAdapter(types_adapter);
 
         progressBar = view.findViewById(R.id.progressBar);
+        localStorageManager = LocalStorageManager.getInstance(getActivity().getApplicationContext());
 
         registerButton = view.findViewById(R.id.register);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +165,7 @@ public class RegisterFragment extends Fragment {
         if (flag) {
             showProgressBar();
             User registerUser = new User(name, email, password, favorite);
+            localStorageManager.saveUser(registerUser);
             loginApiManager
                     .register(registerUser)
                     .enqueue(new Callback<User>() {
